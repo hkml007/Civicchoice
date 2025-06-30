@@ -1,0 +1,70 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Information Table</title>
+    <style>
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .info-table-container {
+            margin: 50px auto;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .info-table thead {
+            background-color: #ffffff;
+            color: #080000;
+        }
+        .info-table th, .info-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+        }
+        .info-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        h2 {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-table-container">
+        <center><h2>Information Portal</h2></center>
+        <table class="table info-table">
+            <thead>
+                <tr>
+                    <th>Information Category</th>
+                    <th>Information</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in user %}
+                <tr>
+                    <td>{{a.informationcategory}}</td>
+                    <td>{{a.information}}</td>
+                    <td>{{a.currentdate}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3"><center><b>No information available.</b></center></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

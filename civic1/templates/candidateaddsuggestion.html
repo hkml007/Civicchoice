@@ -1,0 +1,15 @@
+{% extends 'candidateheader.html' %}
+{% block content %}
+<html>
+    <head><title></title></head>
+    <body>
+    <center>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    </center>
+</body>
+</html>
+{% endblock %}

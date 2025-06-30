@@ -1,0 +1,47 @@
+{% extends 'candidateheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Campaign Form</title>
+</head>
+<body>
+
+    <!-- Show Django messages -->
+    {% if messages %}
+      <div class="container mt-2">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="id_date" class="form-label">Date:</label>
+            <input type="date" name="date" id="id_date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_time" class="form-label">Time:</label>
+            <input type="time" name="time" id="id_time" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_venue" class="form-label">Venue:</label>
+            <input type="text" name="venue" id="id_venue" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_details" class="form-label">Details:</label>
+            <textarea name="details" id="id_details" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% endblock %}

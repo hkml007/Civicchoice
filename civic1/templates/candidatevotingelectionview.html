@@ -1,0 +1,121 @@
+{% extends 'candidateheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Election Details</title>
+    
+    <style>
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .election-table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .election-table thead {
+            background-color: #ffffff;
+            color: #080000;
+        }
+        .election-table th, .election-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+        }
+        .btn-danger {
+            background-color: #ff4d4d;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background-color: #e03d3d;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        h2 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        .alert {
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="election-table-container">
+        <center><h2>Election Details</h2></center>
+        <table class="table election-table">
+            <thead>
+                <tr>
+                    <th>Election Type</th>
+                    <th>Election Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Details</th>
+                    <th>Vote</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in user %}
+                <tr>
+                    <td>{{ a.electiontype }}</td>
+                    <td>{{ a.electiondate }}</td>
+                    <td>{{ a.starttime }}</td>
+                    <td>{{ a.endtime }}</td>
+                    <td>{{ a.details }}</td>
+
+                    {% if a.electiondate == current_date and a.starttime <= current_time and a.endtime >= current_time %}
+                        <td><a class="btn btn-danger" href="{% url 'candidatevotenow' a.id %}">Vote Now</a></td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+
+                    <td>
+                        {% if a.publishstatus == 1 %}
+                            <a class="btn btn-success" href="{% url 'candidateviewresult' a.id %}">Result</a>
+                        
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if messages %}
+    <div class="alert">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

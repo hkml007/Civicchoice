@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Sign up / Login Form</title>
+  <link rel="stylesheet" href="{% static 'login/dist/style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'login/dist/slide navbar style.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head> 
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+      {% if messages %}
+      {% for msg in messages %}
+
+      <li style="color: rgb(255, 255, 255);">{{msg}}</li>
+      {% endfor %}
+      {% endif %}
+			<div class="signup">
+				<form method="POST">
+					{% csrf_token %}
+					<label for="chk" aria-hidden="true">Log In</label>
+					<!-- <input type="text" name="txt" placeholder="User name" required=""> -->
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="password" placeholder="Password" required="">
+					<button>Log In</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+			</div>
+	</div>
+	  
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const validators = [];
+        
+          // Reusable validation function
+          function handleValidation(input, pattern, validMsg, invalidMsg) {
+            const feedback = document.createElement('small');
+            feedback.style.display = 'block';
+            input.parentNode.appendChild(feedback);
+        
+            function validate() {
+              const value = input.value.trim();
+              if (!value) {
+                feedback.textContent = '❌ This field is required';
+                feedback.style.color = 'red';
+                return false;
+              } else if (!pattern.test(value)) {
+                feedback.textContent = '❌ ' + invalidMsg;
+                feedback.style.color = 'red';
+                return false;
+              } else {
+                feedback.textContent = '✅ ' + validMsg;
+                feedback.style.color = 'green';
+                return true;
+              }
+            }
+        
+            input.addEventListener('input', validate);
+            validators.push(validate);
+          }
+        
+        
+         
+
+          // ✅ Email validation
+          const emailInput = document.querySelector('input[name="email"]');
+          if (emailInput) {
+            handleValidation(
+              emailInput,
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              'Valid email address',
+              'Enter a valid email address'
+            );
+          }
+        
+         
+        
+          // Real-time "This field is required" for other fields
+          const requiredFields = [];
+          requiredFields.forEach(fieldName => {
+            const input = document.querySelector(`[name="${fieldName}"]`);
+            if (input) {
+              const feedback = document.createElement('small');
+              feedback.style.display = 'block';
+              input.parentNode.appendChild(feedback);
+        
+              input.addEventListener('input', function () {
+                if (input.value.trim() === '') {
+                  feedback.textContent = '❌ This field is required';
+                  feedback.style.color = 'red';
+                } else {
+                  feedback.textContent = '';
+                }
+              });
+            }
+          });
+        
+          // Prevent form submission if any validation fails
+          const form = document.querySelector('form');
+          if (form) {
+            form.addEventListener('submit', function (e) {
+              let isValid = true;
+              validators.forEach(validateFn => {
+                if (!validateFn()) isValid = false;
+              });
+              if (!isValid) {
+                e.preventDefault();
+                alert("❌ Please fill all required fields and fix validation errors.");
+              }
+            });
+          }
+        });
+        </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>

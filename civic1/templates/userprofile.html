@@ -1,0 +1,122 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container img {
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 150px;
+            height: auto;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Profile Photo Preview -->
+        <div style="text-align: center;">
+            {% if form.instance.photo %}
+                <img id="preview" src="{{ form.instance.photo.url }}" alt="Profile Photo Preview">
+            {% else %}
+                <img id="preview" src="" alt="No Photo" style="display: none;">
+            {% endif %}
+        </div>
+
+        <p>
+            {{ form.photo.label_tag }}
+            <input type="file" name="photo" id="id_photo" accept="image/*" onchange="previewImage(event)">
+        </p>
+
+        <!-- Aadhaar Card -->
+        <p>
+            {{ form.adharcard.label_tag }}
+            {% if form.instance.adharcard %}
+                <span>Uploaded: {{ form.instance.adharcard.name|cut:'user_photos/' }}</span><br>
+            {% endif %}
+            <input type="file" name="adharcard" id="id_adharcard" accept="image/*">
+        </p>
+
+        <!-- ID Card -->
+        <p>
+            {{ form.idcard.label_tag }}
+            {% if form.instance.idcard %}
+                <span>Uploaded: {{ form.instance.idcard.name|cut:'user_photos/' }}</span><br>
+            {% endif %}
+            <input type="file" name="idcard" id="id_idcard" accept="image/*">
+        </p>
+
+        <!-- All Other Fields -->
+        {% for field in form %}
+            {% if field.name == 'dob' %}
+                <p>
+                    {{ field.label_tag }}
+                    <input type="date" name="{{ field.name }}" id="id_dob"
+                           value="{{ field.value|default_if_none:'' }}">
+                </p>
+            {% elif field.name != 'photo' and field.name != 'adharcard' and field.name != 'rationcard' and field.name != 'idcard' %}
+                <p>{{ field.label_tag }} {{ field }}</p>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Login form fields -->
+        {% for field in login_form %}
+            <p>{{ field.label_tag }} {{ field }}</p>
+        {% endfor %}
+
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+</div>
+
+<!-- JavaScript: Live Image Preview -->
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+<script>
+    // Restrict DOB to 18+ users
+    window.onload = function () {
+        var dobInput = document.querySelector('input[name="dob"]');
+        if (dobInput) {
+            var today = new Date();
+            var year = today.getFullYear() - 18;
+            var month = (today.getMonth() + 1).toString().padStart(2, '0');
+            var day = today.getDate().toString().padStart(2, '0');
+            var maxDate = `${year}-${month}-${day}`;
+            dobInput.setAttribute('type', 'date');
+            dobInput.setAttribute('max', maxDate);
+        }
+    };
+</script>
+
+</body>
+</html>
+{% endblock %}

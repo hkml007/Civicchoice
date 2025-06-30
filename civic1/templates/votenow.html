@@ -1,0 +1,92 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<html>
+    <head><title>Candidate List</title>
+    <style>
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .candidate-table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .candidate-table thead {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .candidate-table th, .candidate-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+        }
+        .candidate-table img {
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease;
+        }
+        .candidate-table img:hover {
+            transform: scale(1.05);
+        }
+        .vote-button {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .vote-button:hover {
+            background-color: #5848e3;
+            transform: translateY(-2px);
+        }
+        h2 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+    </style></head>
+    <body>
+       <div class="candidate-table-container">
+        <center><h2>Candidate List</h2></center>
+        <table class="table candidate-table">
+            <thead>
+            <tr>
+                <th>Party Name</th>
+                <th>Party Logo</th>
+                <th>Candidate Name</th>
+                <th>Photo</th>
+            </tr>
+            </thead>
+             <tbody>
+              
+             {% for nomination in nominations %}
+            <tr>
+                <td>{{ nomination.party.partyname }}</td>
+                <td>
+                {% if nomination.party.partyname == 'Independent' %} 
+                <img src="{{ nomination.independentpartylogo.url }}" width="80px" height="80px"></td>
+                {% else %}
+                <img src="/photo/{{ nomination.party.partylogo }}" width="80px" height="80px"></td>
+                {% endif %}
+                </td>
+                
+                <td>{{ nomination.loginid.name }}</td>
+                <td><img src="/photo/{{ nomination.loginid.photo }}" width="80px" height="80px"></td>
+                <td>
+                    <a href="{% url 'vote' nomination.loginid.id elid %}">
+                        <button class="vote-button" type="submit">Vote</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </body>
+</html>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'candidateheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Notifications</title>
+    <style>
+   
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .notification-table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .notification-table thead {
+            background-color: #ffffff;
+            color: #080000;
+        }
+        .notification-table th, .notification-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        h2 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-table-container">
+        <center>
+        <h2>Notifications</h2></center>
+        <table class="table notification-table">
+            <thead>
+                <tr>
+                    <th>Notification</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in user %}
+                <tr>
+                    <td>{{ a.notification }}</td>
+                    <td>{{ a.currentdate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

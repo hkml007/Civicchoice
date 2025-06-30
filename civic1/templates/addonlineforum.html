@@ -1,0 +1,730 @@
+<!-- <html>
+    <head><title>Online Forum</title></head>
+    <body>
+        
+        <form method="post">
+            {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+        </form>
+    </body>
+</html> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light" data-menu-color="light" data-topbar-color="dark">
+    
+<!-- Mirrored from myrathemes.com/scoxe/forms-validation by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Mar 2025 14:26:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <meta charset="utf-8" />
+        <title>Form Validation | Scoxe - Responsive Bootstrap 5 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Myra Studio" name="author" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+		<!-- App css -->
+		<link href="{% static 'admin/assets/css/style.min.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'admin/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+		<script src="{% static 'admin/assets/js/config.js' %}"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div class="layout-wrapper">
+
+            <!-- ========== Left Sidebar ========== -->
+            <div class="main-menu">
+                <!-- Brand Logo -->
+                <div class="logo-box">
+                    <!-- Brand Logo Light -->
+                    <a class='logo-light' href='index.html'>
+                        <img src="{% static 'admin/assets/images/logo-light.png' %}" alt="logo" class="logo-lg" height="32">
+                        <img src="{% static 'admin/assets/images/logo-light-sm.png' %}" alt="small logo" class="logo-sm" height="32">
+                    </a>
+
+                    <!-- Brand Logo Dark -->
+                    <a class='logo-dark' href='index.html'>
+                        <img src="{% static 'admin/assets/images/logo-dark.png' %}" alt="dark logo" class="logo-lg" height="32">
+                        <img src="{% static 'admin/assets/images/logo-dark-sm.png' %}" alt="small logo" class="logo-sm" height="32">
+                    </a>
+                </div>
+
+                <!--- Menu -->
+                <div data-simplebar>
+                    <ul class="app-menu">
+
+                        <li class="menu-title">Menu</li>
+
+                        <li class="menu-item">
+                            <a class='menu-link waves-effect' href='../adminindex'>
+                                <span class="menu-icon"><i data-lucide="airplay "></i></span>
+                                <span class="menu-text"> Dashboards </span>
+                               
+                            </a>
+                        </li>
+
+                        <!-- <li class="menu-title">Custom</li>
+
+                        <li class="menu-item">
+                            <a class='menu-link waves-effect' href='apps-calendar.html'>
+                                <span class="menu-icon"><i data-lucide="calendar"></i></span>
+                                <span class="menu-text"> Calendar </span>
+                            </a>
+                        </li>
+
+                        <li class="menu-item">
+                            <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                                <span class="menu-icon"><i data-lucide="copy"></i></span>
+                                <span class="menu-text"> Extra Pages </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="menuExpages">
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-starter.html'>
+                                            <span class="menu-text">Starter</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-invoice.html'>
+                                            <span class="menu-text">Invoice</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-login.html'>
+                                            <span class="menu-text">Log In</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-register.html'>
+                                            <span class="menu-text">Register</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-recoverpw.html'>
+                                            <span class="menu-text">Recover Password</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-lock-screen.html'>
+                                            <span class="menu-text">Lock Screen</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-404.html'>
+                                            <span class="menu-text">Error 404</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='pages-500.html'>
+                                            <span class="menu-text">Error 500</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="menu-item">
+                            <a href="#menuLayouts" data-bs-toggle="collapse" class="menu-link waves-effect">
+                                <span class="menu-icon"><i data-lucide="panel-left"></i></span>
+                                <span class="menu-text"> Layouts </span>
+                                <span class="badge bg-blue ms-auto">New</span>
+                            </a>
+                            <div class="collapse" id="menuLayouts">
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='layout-horizontal.html'>
+                                            <span class="menu-text">Horizontal</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='layout-sidenav-dark.html'>
+                                            <span class="menu-text">Sidenav Dark</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item">
+                                        <a class='menu-link' href='layout-topbar-light.html'>
+                                            <span class="menu-text">Topbar light</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li> -->
+
+                        
+                    <li class="menu-title">Components</li>
+
+                    <li class="menu-item">
+                        <a href="#menuComponentsui" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="briefcase"></i></span>
+                            <span class="menu-text"> User Handling</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuComponentsui">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="{% url 'adminuserview' %}">
+                                        <span class="menu-text">user view</span>
+                                    </a>
+                                    <a class='menu-link' href="{% url 'admincandidateview' %}">
+                                        <span class="menu-text">Candidate View</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-buttons.html'>
+                                        <span class="menu-text">Buttons</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-cards.html'>
+                                        <span class="menu-text">Cards</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-carousel.html'>
+                                        <span class="menu-text">Carousel</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-dropdowns.html'>
+                                        <span class="menu-text">Dropdowns</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-video.html'>
+                                        <span class="menu-text">Embed Video</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-general.html'>
+                                        <span class="menu-text">General UI</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-grid.html'>
+                                        <span class="menu-text">Grid</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-images.html'>
+                                        <span class="menu-text">Images</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-list-group.html'>
+                                        <span class="menu-text">List Group</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-modals.html'>
+                                        <span class="menu-text">Modals</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-offcanvas.html'>
+                                        <span class="menu-text">Offcanvas</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-placeholders.html'>
+                                        <span class="menu-text">Placeholders</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-progress.html'>
+                                        <span class="menu-text">Progress</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-spinners.html'>
+                                        <span class="menu-text">Spinners</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='ui-tabs-accordions.html'>
+                                        <span class="menu-text">Tabs & Accordions</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-tooltips-popovers.html'>
+                                        <span class="menu-text">Tooltips & Popovers</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='ui-typography.html'>
+                                        <span class="menu-text">Typography</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuExtendedui" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="layers-3"></i></span>
+                            <span class="menu-text"> Notification</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuExtendedui">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="{% url 'addnotification' %}">
+                                        <span class="menu-text">Send Notification</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="{% url 'adminnotificationview' %}">
+                                        <span class="menu-text">View Notification</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='components-loading-buttons.html'>
+                                        <span class="menu-text">Loading Buttons</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuIcons" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="box"></i></span>
+                            <span class="menu-text"> Suggestions</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuIcons">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../adminsuggestionview">
+                                        <span class="menu-text">View Suggestion</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='icons-lucide.html'>
+                                        <span class="menu-text">Lucide Icons</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='icons-mdi.html'>
+                                        <span class="menu-text">Material Design Icons</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuForms" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="book"></i></span>
+                            <span class="menu-text"> Election </span>
+                            <!-- <span class="badge bg-danger rounded-pill ms-auto">5</span> -->
+                        </a>
+                        <div class="collapse" id="menuForms">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../addelection">
+                                        <span class="menu-text">Add Election Details</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../adminelectionview">
+                                        <span class="menu-text">View Election Details</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../adminapprovedcandidates">
+                                        <span class="menu-text">View Approved Candidates</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../addpoliticalparties">
+                                        <span class="menu-text">Political Parties</span>
+                                    </a>
+                                </li>
+                                
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='forms-quilljs.html'>
+                                        <span class="menu-text">Editor</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='forms-file-uploads.html'>
+                                        <span class="menu-text">File Uploads</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuTables" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="list"></i></span>
+                            <span class="menu-text">Information Portal</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuTables">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../addinformation">
+                                        <span class="menu-text">Add Information</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../admininformationview">
+                                        <span class="menu-text">View Information</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#menuCharts" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="bar-chart-2"></i></span>
+                            <span class="menu-text"> Online Forum</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuCharts">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../addonlineforum">
+                                        <span class="menu-text">Add Online Forum</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="../adminonlineforumview">
+                                        <span class="menu-text">View Online Forum</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="menu-item">
+                                    <a class='menu-link' href='charts-chartjs.html'>
+                                        <span class="menu-text">Chartjs Charts</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- <li class="menu-item">
+                        <a href="#menuMaps" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="map"></i></span>
+                            <span class="menu-text"> Maps </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuMaps">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href='maps-google.html'>
+                                        <span class="menu-text">Google Maps</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href='maps-vector.html'>
+                                        <span class="menu-text">Vector Maps</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li> -->
+
+                    <!-- <li class="menu-item">
+                        <a href="#menuMultilevel" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="share-2"></i></span>
+                            <span class="menu-text"> Multi Level </span>
+                            <span class="menu-arrow"></span>
+                        </a> -->
+                        <div class="collapse" id="menuMultilevel">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="#menuMultilevel2" data-bs-toggle="collapse" class="menu-link waves-effect">
+                                        <span class="menu-text"> Second Level </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="menuMultilevel2">
+                                        <ul class="sub-menu">
+                                            <li class="menu-item">
+                                                <a href="javascript: void(0);" class="menu-link">
+                                                    <span class="menu-text">Item 1</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="javascript: void(0);" class="menu-link">
+                                                    <span class="menu-text">Item 2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="menu-item">
+                                    <a href="#menuMultilevel3" data-bs-toggle="collapse" class="menu-link waves-effect">
+                                        <span class="menu-text">Third Level</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="menuMultilevel3">
+                                        <ul class="sub-menu">
+                                            <li class="menu-item">
+                                                <a href="javascript: void(0);" class="menu-link">
+                                                    <span class="menu-text">Item 1</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#menuMultilevel4" data-bs-toggle="collapse"
+                                                    class="menu-link waves-effect">
+                                                    <span class="menu-text">Item 2</span>
+                                                    <span class="menu-arrow"></span>
+                                                </a>
+                                                <div class="collapse" id="menuMultilevel4">
+                                                    <ul class="sub-menu">
+                                                        <li class="menu-item">
+                                                            <a href="javascript: void(0);" class="menu-link">
+                                                                <span class="menu-text">Item 1</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="menu-item">
+                                                            <a href="javascript: void(0);" class="menu-link">
+                                                                <span class="menu-text">Item 2</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- <div class="help-box">
+                    <h5 class="text-muted font-size-15 mb-3">For Help &amp; Support</h5>
+                    <p class="font-size-13"><span class="font-weight-bold">Email:</span> <br> info@domain.com</p>
+                    <p class="mb-0 font-size-13"><span class="font-weight-bold">Call:</span> <br> (+123) 123 456 789</p>
+                </div> -->
+            </div>
+        </div>
+
+            
+      
+            <!-- Start Page Content here -->
+            <div class="page-content">
+
+                <!-- ========== Topbar Start ========== -->
+                <div class="navbar-custom">
+                    <div class="topbar">
+                        <div class="topbar-menu d-flex align-items-center gap-lg-2 gap-1">
+
+                            <!-- Brand Logo -->
+                            <div class="logo-box">
+                                <!-- Brand Logo Light -->
+                                <a class='logo-light' href='index.html'>
+                                    <img src="{% static 'admin/assets/images/logo-light.png' %}" alt="logo" class="logo-lg" height="32">
+                                    <img src="{% static 'admin/assets/images/logo-light-sm.png' %}" alt="small logo" class="logo-sm" height="32">
+                                </a>
+
+                                <!-- Brand Logo Dark -->
+                                <a class='logo-dark' href='index.html'>
+                                    <img src="{% static 'admin/assets/images/logo-dark.png' %}" alt="dark logo" class="logo-lg" height="32">
+                                    <img src="{% static 'admin/assets/images/logo-dark-sm.png' %}" alt="small logo" class="logo-sm" height="32">
+                                </a>
+                            </div>
+
+                            <!-- Sidebar Menu Toggle Button -->
+                             <!-- Sidebar Menu Toggle Button -->
+                           <button class="button-toggle-menu waves-effect waves-light rounded-circle" 
+        style="font-size: 28px; padding: 16px; width: 60px; height: 70px;">
+    <i class="mdi mdi-menu"></i>
+</button>
+                        </div>
+                        <div style="position: absolute; left: 1050px; top: 20px; z-index: 999;">
+                        <a href="../logoutview" class="btn btn-outline-primary btn-sm" title="Logout">
+                        <i data-lucide="log-out" class="font-size-20 me-2"></i>
+                        <span>Logout</span>
+                     </a>
+                      </div>       
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!-- ========== Topbar End ========== -->
+                <!-- ========== Topbar End ========== -->
+
+                <div class="px-3">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="py-3 py-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                  
+                                </div>
+                                <div class="col-lg-6">
+                                   <div class="d-none d-lg-block">
+                                    <!-- <ol class="breadcrumb m-0 float-end">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                                        <li class="breadcrumb-item active">Form Validation</li>
+                                    </ol> -->
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+  <div class="col-lg-6">
+    <div class="card shadow">
+      <div class="card-body p-4">
+        <div class="text-center mb-4">
+                <h3>Add Online Forum</h3>
+            </div>
+              <br><br>
+        <form class="needs-validation" novalidate method="POST">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="topic" class="form-label">Topic</label>
+            <input type="text" class="form-control" id="topic" name="topic" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="time" class="form-label">Time</label>
+            <input type="time" class="form-control" id="time" name="time" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                        <!-- end row -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script> © Scoxe</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end">
+                                    <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a> </p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+            <!-- End Page content -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Vendor js -->
+        <!-- App js -->
+        <script src="{% static 'admin/assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'admin/assets/js/app.js' %}"></script>
+
+        <!-- Validation Demo js-->
+        <script src="{% static 'admin/assets/js/pages/form-validation.html' %}"></script>
+         
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const validators = [];
+        
+          // Reusable validation function
+          function handleValidation(input, pattern, validMsg, invalidMsg) {
+            const feedback = document.createElement('small');
+            feedback.style.display = 'block';
+            input.parentNode.appendChild(feedback);
+        
+            function validate() {
+              const value = input.value.trim();
+              if (!value) {
+                feedback.textContent = '❌ This field is required';
+                feedback.style.color = 'red';
+                return false;
+              } else if (!pattern.test(value)) {
+                feedback.textContent = '❌ ' + invalidMsg;
+                feedback.style.color = 'red';
+                return false;
+              } else {
+                feedback.textContent = '✅ ' + validMsg;
+                feedback.style.color = 'green';
+                return true;
+              }
+            }
+        
+            input.addEventListener('input', validate);
+            validators.push(validate);
+          }
+        
+      
+          // Real-time "This field is required" for other fields
+          const requiredFields = ['topic','description','date','time'];
+          requiredFields.forEach(fieldName => {
+            const input = document.querySelector(`[name="${fieldName}"]`);
+            if (input) {
+              const feedback = document.createElement('small');
+              feedback.style.display = 'block';
+              input.parentNode.appendChild(feedback);
+        
+              input.addEventListener('input', function () {
+                if (input.value.trim() === '') {
+                  feedback.textContent = '❌ This field is required';
+                  feedback.style.color = 'red';
+                } else {
+                  feedback.textContent = '';
+                }
+              });
+            }
+          });
+        
+          // Prevent form submission if any validation fails
+          const form = document.querySelector('form');
+          if (form) {
+            form.addEventListener('submit', function (e) {
+              let isValid = true;
+              validators.forEach(validateFn => {
+                if (!validateFn()) isValid = false;
+              });
+              if (!isValid) {
+                e.preventDefault();
+                alert("❌ Please fill all required fields and fix validation errors.");
+              }
+            });
+          }
+        });
+        </script>
+    </body>
+
+<!-- Mirrored from myrathemes.com/scoxe/forms-validation by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Mar 2025 14:26:02 GMT -->
+</html>

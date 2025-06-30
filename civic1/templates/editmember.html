@@ -1,0 +1,16 @@
+<html>
+    <head><title></title></head>
+    <body>
+        <form method="Post" enctype="multipart/form-data">
+        {% if form.instance.photo %}
+        <div>
+            <img src="{{ form.instance.photo.url }}" alt="Current Profile Photo" width="100">
+        </div>
+    {% endif %}
+        
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+        </form>
+    </body>
+</html>

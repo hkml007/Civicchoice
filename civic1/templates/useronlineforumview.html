@@ -1,0 +1,78 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<html>
+    <head><title></title>
+    <style>
+   
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .forum-table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .forum-table thead {
+            background-color: #ffffff;
+            color: #080000;
+        }
+        .forum-table th, .forum-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        h2 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+    </style></head>
+    <body>
+         <div class="forum-table-container">
+        <center>
+             <h2>Online Forum</h2></center>
+        <table class="table forum-table">
+             <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Time</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            {% for a in user %}
+            <tr>
+                <td>{{a.topic}}</td>
+                <td>{{a.description}}</td>
+                <td>{{a.date}}</td>
+                <td>{{a.time}}</td>
+                
+                 <td>
+                    {% if today <= a.date %}
+                        {% if a.id in joined_forums %}
+                            Joined
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'userjoin' a.id %}">Join</a>
+                       {% endif %}
+        {% else %}
+            Closed
+        {% endif %}
+                    </td>
+            </tr>
+            {% endfor %}
+             </tbody>
+        </table>
+        </div>
+    </body>
+</html>
+{% endblock %}

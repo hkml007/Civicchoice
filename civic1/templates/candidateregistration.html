@@ -1,0 +1,277 @@
+
+{% extends 'indexheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Candidate Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            background-color: #fff;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form p {
+            margin-bottom: 15px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Candidate Registration</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ forms.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Set max DOB to today minus 18 years
+        window.onload = function() {
+            var dobInput = document.querySelector('input[name="dob"]');
+            if (dobInput) {
+                dobInput.type = 'date';
+                var today = new Date();
+                var year = today.getFullYear() - 18;
+                var month = String(today.getMonth() + 1).padStart(2, '0');
+                var day = String(today.getDate()).padStart(2, '0');
+                var maxDate = year + '-' + month + '-' + day;
+                dobInput.max = maxDate;
+            }
+        };
+    </script>
+     
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const validators = [];
+        
+          // Reusable validation function
+          function handleValidation(input, pattern, validMsg, invalidMsg) {
+            const feedback = document.createElement('small');
+            feedback.style.display = 'block';
+            input.parentNode.appendChild(feedback);
+        
+            function validate() {
+              const value = input.value.trim();
+              if (!value) {
+                feedback.textContent = '❌ This field is required';
+                feedback.style.color = 'red';
+                return false;
+              } else if (!pattern.test(value)) {
+                feedback.textContent = '❌ ' + invalidMsg;
+                feedback.style.color = 'red';
+                return false;
+              } else {
+                feedback.textContent = '✅ ' + validMsg;
+                feedback.style.color = 'green';
+                return true;
+              }
+            }
+        
+            input.addEventListener('input', validate);
+            validators.push(validate);
+          }
+        
+          // ✅ Name validation (letters and spaces only)
+          const nameInput = document.querySelector('input[name="name"]');
+          if (nameInput) {
+            handleValidation(
+              nameInput,
+              /^[A-Za-z ]+$/,  // No limit on characters
+              'Valid name',
+              'Name must contain only letters and spaces'
+            );
+          }
+        
+          // ✅ Contact validation (10 digits)
+          const contactInput = document.querySelector('input[name="contactno"]');
+          if (contactInput) {
+            handleValidation(
+              contactInput,
+              /^\d{10}$/,
+              'Valid phone number',
+              'Enter a valid 10-digit phone number'
+            );
+          }
+
+           const adharInput = document.querySelector('input[name="adhar"]');
+          if (adharInput) {
+            handleValidation(
+              adharInput,
+              /^\d{12}$/,
+              'Valid Adhar Number',
+              'Enter a valid 12-digit Adhar Number'
+            );
+          }
+
+        
+          // ✅ Email validation
+          const emailInput = document.querySelector('input[name="email"]');
+          if (emailInput) {
+            handleValidation(
+              emailInput,
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              'Valid email address',
+              'Enter a valid email address'
+            );
+          }
+        
+          // ✅ Password validation (min 8 chars, upper, lower, number, special char)
+          const passwordInput = document.querySelector('input[name="password"]');
+          if (passwordInput) {
+            handleValidation(
+              passwordInput,
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
+              'Strong password',
+              'Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character'
+            );
+          }
+        
+          // Real-time "This field is required" for other fields
+          const requiredFields = ['photo','address','gender','dob','idcardno','rationcardno','panchayat','party','adharcard','idcard'];
+          requiredFields.forEach(fieldName => {
+            const input = document.querySelector(`[name="${fieldName}"]`);
+            if (input) {
+              const feedback = document.createElement('small');
+              feedback.style.display = 'block';
+              input.parentNode.appendChild(feedback);
+        
+              input.addEventListener('input', function () {
+                if (input.value.trim() === '') {
+                  feedback.textContent = '❌ This field is required';
+                  feedback.style.color = 'red';
+                } else {
+                  feedback.textContent = '';
+                }
+              });
+            }
+          });
+        
+          // Prevent form submission if any validation fails
+          const form = document.querySelector('form');
+          if (form) {
+            form.addEventListener('submit', function (e) {
+              let isValid = true;
+              validators.forEach(validateFn => {
+                if (!validateFn()) isValid = false;
+              });
+              if (!isValid) {
+                e.preventDefault();
+                alert("❌ Please fill all required fields and fix validation errors.");
+              }
+            });
+          }
+        });
+        </script>
+</body>
+</html>
+{% endblock %}
+
+
+
+<!-- 
+<html>
+<head>
+    <title>Candidate Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            background-color: #fff;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form p {
+            margin-bottom: 15px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Candidate Registration</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ forms.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+-->

@@ -1,0 +1,64 @@
+{% extends 'indexheader.html' %}
+
+{% block content %}
+<style>
+    .contact-container {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        border-radius: 8px;
+    }
+    .contact-container h1 {
+        color: #1d5e9f;
+        text-align: center;
+    }
+    .contact-container h2 {
+        color: #0e3862;
+        border-bottom: 2px solid #0073e6;
+        padding-bottom: 5px;
+    }
+    .contact-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .contact-container li {
+        background-color: #e1f0ff;
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    .contact-container p {
+        background-color: #d6eaff;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="contact-container">
+    <h1>Contact Us</h1>
+
+    <h2>Phone Numbers</h2>
+    <ul>
+        <li>+91 471 2325048 (Administration)</li>
+        <li>+91 471 2337884 (Election)</li>
+        <li>+91 82810 00143 (Court)</li>
+    </ul>
+
+    <h2>Email Addresses</h2>
+    <ul>
+        <li>cru.sec@kerala.gov.in</li>
+    </ul>
+
+    <h2>Address</h2>
+    <p>
+        State Election Commission, Kerala<br>
+        Janahitham<br>
+        TC-27/6(2)<br>
+        Vikas Bhavan P.O<br>
+        Thiruvananthapuram - 695 033<br>
+        Kerala, India
+    </p>
+</div>
+{% endblock %}

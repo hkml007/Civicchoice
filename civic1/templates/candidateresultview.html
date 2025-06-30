@@ -1,0 +1,96 @@
+{% extends 'candidateheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Election Results</title>
+    <style>
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin: 40px;
+        }
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 260px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+        .party-logo, .candidate-photo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        h3 {
+            margin: 10px 0 6px;
+            color: #333;
+            font-weight: 600;
+        }
+        .vote-count {
+            background: #3253c8;           /* Deep blue background */
+            color: #fff;                   /* White text */
+            padding: 8px 18px;             /* More padding for better size */
+            border-radius: 25px;           /* More rounded pill shape */
+            font-weight: 700;              /* Bold text */
+            font-size: 1em;                /* Slightly larger font */
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 2px 6px rgba(50, 83, 200, 0.5); /* subtle shadow */
+            letter-spacing: 0.05em;        /* Slight letter spacing */
+            user-select: none;             /* Prevent text selection */
+            transition: background-color 0.3s ease;
+        }
+    
+    </style>
+</head>
+<body>
+    <center><h2>Election Results</h2></center>
+    <div class="results-container">
+    {% for nomination in nominations %}
+    <div class="result-card">
+        <h3>Party: {{ nomination.party.partyname }}</h3>
+        {% if nomination.party.partyname == 'Independent' %}
+    {% if nomination.independentpartylogo %}
+        <img class="party-logo" src="{{ nomination.independentpartylogo.url }}" alt="Independent Logo">
+    {% endif %}
+{% else %}
+    {% if nomination.party.partylogo %}
+        <img class="party-logo" src="{{ nomination.party.partylogo.url }}" alt="Party Logo">
+    {% endif %}
+{% endif %}
+
+        
+        <h3>Candidate: {{ nomination.loginid.name }}</h3>
+        {% if nomination.loginid.photo %}
+        <img class="candidate-photo" src="{{ nomination.loginid.photo.url }}" alt="Candidate Photo">
+        {% endif %}
+        
+        <p class="vote-count">
+            Votes: 
+            {% for candidate in candidates %}
+                {% if candidate.id == nomination.loginid.id %}
+                    {{ candidate.vote_count }}
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<html>
+<head>
+    <title>All Panchayat Election Results</title>
+    <style>
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .result-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px;
+            width: 260px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .result-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 10px 0;
+        }
+        .candidate-photo {
+            border-radius: 50%;
+        }
+        .party-logo {
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+        h4 {
+            margin-top: 5px;
+            color: #2c3e50;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h2>All Election Results</h2>
+
+    {% for election_type, wards in ward_results.items %}
+        <h2>{{ election_type }}</h2>
+        {% for ward, results in wards.items %}
+            {% if results.0.election.electiondate %}
+                <p style="font-size: 16px; color: #555;">Election Date: {{ results.0.election.electiondate }}</p>
+            {% endif %}
+            <h3>Ward: {{ ward }}</h3>
+            <div class="results-container">
+                {% for result in results %}
+                    <div class="result-card">
+                        <img src="{{ result.candidate.photo.url }}" class="candidate-photo" alt="Candidate Photo">
+                        <h4>{{ result.candidate.name }}</h4>
+                        {% if result.party %}
+                        <p>Party: {{ result.party.partyname }}</p>
+                            
+                            <!-- {% if result.party.partylogo %}
+                                <img src="{{ result.party.partylogo.url }}" class="party-logo" alt="Party Logo" width="60" height="60">
+                            {% endif %} -->
+                            {% if result.party.partyname == 'Independent' %}
+                               {% if result.nomination.independentpartylogo %}
+                               <img src="{{ result.nomination.independentpartylogo.url }}" class="party-logo" alt="Independent Logo" width="60" height="60">
+                               {% endif %}
+                            {% else %}
+                               {% if result.party.partylogo %}
+                                <img src="{{ result.party.partylogo.url }}" class="party-logo" alt="Party Logo" width="60" height="60">
+                               {% endif %}
+                            {% endif %}
+          
+                        {% endif %}
+                        <p>Votes: {{ result.vote_count }}</p>
+                        {% if result.is_winner %}
+                            <strong style="color: green;">Winner</strong>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <a href="{% url 'userhome' %}" class="back-link">Back to Home</a>
+</center>
+</body>
+</html>
+{% endblock %}
+
+
+
+<!-- 
+<html>
+<head>
+    <title>All Panchayat Election Results</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        .back-link {
+            margin: 20px;
+            display: inline-block;
+            text-decoration: none;
+            background: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+        .back-link:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h2>All Election Results</h2>
+
+        {% if panchayat_results %}
+            {% for panchayat, results in panchayat_results.items %}
+                <h3>Place: {{ panchayat }}</h3>
+                <table>
+                    <tr>
+                        <th>Election Type</th>
+                        <th>Date</th>
+                        <th>Candidate Name</th>
+                        <th>Party</th>
+                        <th>Votes</th>
+                    </tr>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.election.electiontype }}</td>
+                        <td>{{ result.election.electiondate }}</td>
+                        <td>{{ result.candidate.name }}</td>
+                        <td>{{ result.candidate.party.partyname }}</td>
+                        <td>{{ result.vote_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        {% else %}
+            <p>No election results published yet.</p>
+        {% endif %}
+
+        <a href="{% url 'userhome' %}" class="back-link">Back to Home</a>
+    </center>
+</body>
+</html>
+
+ -->

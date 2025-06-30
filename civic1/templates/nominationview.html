@@ -1,0 +1,43 @@
+{% extends 'userheader.html' %}
+        {% block content %}
+<html>
+    <head><title></title></head>
+    <body>
+        <center>
+        <table class="table table-striped">
+            <tr>
+                <th>Family Name</th>
+                <th>Name on Ballot</th>
+                <th>Ward</th>
+                <th>Pincode</th>
+                <th>Election</th>
+                <th>Election Date</th>
+                
+                
+            </tr>
+            {% for a in user %}
+            <tr>
+                <td>{{ a.familyname }}</td>
+                <td>{{ a.nameonballotpaper }}</td>
+                <td>{{ a.ward }}</td>
+                <td>{{ a.pincode }}</td>
+                <td>{{ a.electionid.electiontype }}</td>
+                <td>{{ a.electionid.electiondate }}</td>
+                {% if a.status != 1 and a.status != 2 %}
+                {% if a.cancelstatus == 0 %}
+                <td><a class="btn btn-primary" href="{% url 'cancelstatus' a.id %}">Cancel</a></td>
+                {% else %}
+                <td>Cancelled</td>
+                {% endif %}
+                {% endif %}
+                {% if a.status == 1 %}
+                <td>Approved</td>
+                {% elif a.status == 2 %}
+                <td>Rejected</td>
+                {% endif %}    
+            </tr>
+            {% endfor %}
+        </table></center>
+    </body>
+</html>
+{% endblock %}

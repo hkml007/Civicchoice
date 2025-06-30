@@ -1,0 +1,136 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+<html>
+<head>
+  <title>Election Results</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+    body {
+      background: #f5f7fa;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center; /* 🔥 global centering */
+    }
+    h2 {
+      color: #333;
+      margin: 30px 0 20px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+    .result-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 0 15px 40px 15px;
+    }
+    .result-card {
+      background: linear-gradient(135deg, #ffffff 0%, #e6f2ff 100%);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 25px 20px 30px 20px;
+      width: 260px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      color: #444;
+      margin: auto; /* 🔥 center each card horizontally */
+    }
+    .result-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+    }
+    .party-name {
+      font-weight: 700;
+      font-size: 20px;
+      color: #000;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .result-card img {
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #f9f9f9;
+      padding: 5px;
+      margin-bottom: 15px;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h5 {
+      margin: 12px 0 6px 0;
+      font-weight: 600;
+      font-size: 18px;
+      color: #222;
+    }
+    .vote-count {
+      display: inline-block;
+      background: #cce5ff;
+      color: #004085;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.6);
+      letter-spacing: 0.8px;
+      user-select: none;
+      margin-top: 10px;
+    }
+    .ward-heading {
+      color: #27ae60;
+      margin-top: 40px;
+      border-bottom: 2px solid #27ae60;
+      display: inline-block;
+      padding-bottom: 5px;
+      text-align: center; /* 🔥 center h3 headings */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .result-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Election Results</h2>
+
+  {% for ward, nominations in grouped.items %}
+    <h3 class="ward-heading">Ward: {{ ward }}</h3>
+
+    <div class="result-container">
+      {% for n in nominations %}
+        <div class="result-card"
+             title="{{ n.loginid.name }} - {{ n.party.partyname }}"
+             onmouseover="this.style.transform='scale(1.05)'"
+             onmouseout="this.style.transform='scale(1)'">
+
+          {% if n.party %}
+            <div class="party-name">{{ n.party.partyname }}</div>
+            <img src="{{ n.party.partylogo.url }}" alt="Party Logo" width="80" height="80">
+          {% endif %}
+
+          <img src="{{ n.loginid.photo.url }}" alt="Candidate Photo">
+          <h5>{{ n.loginid.name }}</h5>
+
+          <div class="vote-count">
+            {{ n.vote_count }} Votes
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'candidateheader.html' %}
+        {% block content %}
+<html>
+    <head><title>Candidate Profile</title>
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-container img {
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 150px;
+            height: auto;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+    
+    /* your existing styles */
+
+    #preview {
+        max-width: 150px;
+        max-height: 150px;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        display: block;
+        margin: 0 auto 15px auto;
+        object-fit: cover;
+    }
+
+    </style></head>
+    <body>
+         <div class="form-container"></div>
+       <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- 📸 Photo Upload and Preview -->
+          
+            <div style="text-align: center;">
+                <img id="preview" 
+                     src="{{ form.instance.photo.url }}" 
+                     alt="Profile Photo Preview"
+                     onerror="this.style.display='none';"
+                >
+            </div>
+              <p>
+                {{ form.photo.label_tag }}
+                <input type="file" name="photo" id="id_photo" accept="image/*" onchange="previewImage(event)">
+            </p>
+
+
+{% for field in form %}
+    {% if field.name != 'photo' and field.name != 'dob' %}
+        <p>{{ field.label_tag }} {{ field }}</p>
+   {% elif field.name == 'dob' %}
+    <p>
+        {{ field.label_tag }}
+        <input type="date" name="{{ field.name }}" id="id_dob"
+       value="{{ field.value|date:'Y-m-d' }}"
+       max="{{ today_minus_18 }}">
+
+    </p>
+{% endif %}
+{% endfor %}
+
+            <!-- Secondary form (if exists) -->
+            {{ forms.as_p }}
+
+            <button class="btn btn-primary" type="submit">Update</button>
+        </form>
+    </div>
+
+    <!-- 🔁 JavaScript: Live Preview -->
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    </body>
+</html>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'userheader.html' %}
+{% block content %}
+<html>
+    <head><title></title>
+    <style>
+   
+        body {
+            background: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .forum-table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .forum-table thead {
+            background-color: #ffffff;
+            color: #080000;
+        }
+        .forum-table th, .forum-table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 12px 8px;
+        }
+       .btn-success {
+            background-color: #28a745;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        h2 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="forum-table-container">
+        <center>
+             <h2>Joined Online Forum</h2></center>
+        <table class="table forum-table">
+             <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for a in user %}
+            <tr>
+                <td>{{a.forumid.topic}}</td>
+                <td>{{a.forumid.description}}</td>
+                <td>{{a.forumid.date}}</td>
+                <td>{{a.forumid.time}}</td>
+                <td><a class="btn btn-success" href="{% url 'userchat' a.forumid.id %}">Chat</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    </body>
+</html>
+{% endblock %}
